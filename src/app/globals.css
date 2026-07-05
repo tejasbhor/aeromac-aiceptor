@@ -1,26 +1,132 @@
 @import "tailwindcss";
 
+/* ─── Design Tokens ─────────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg:        #05070B;
+  --surface:   #0A111B;
+  --graphite:  #1A2430;
+  --titanium:  #A8B2BD;
+  --white:     #F8FAFC;
+  --accent:    #4AA8FF;
+
+  --font-heading:   var(--font-space-grotesk);
+  --font-body:      var(--font-inter);
+  --font-mono:      var(--font-ibm-plex-mono);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg:        var(--bg);
+  --color-surface:   var(--surface);
+  --color-graphite:  var(--graphite);
+  --color-titanium:  var(--titanium);
+  --color-white:     var(--white);
+  --color-accent:    var(--accent);
+  --font-sans:       var(--font-inter);
+  --font-mono:       var(--font-ibm-plex-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ─── Reset & Base ───────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background: var(--bg);
+  color: var(--white);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Lenis manages scrolling on html element */
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--white);
+  font-family: var(--font-body), 'Inter', system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+/* ─── Typography Scale ───────────────────────────────────── */
+.font-heading  { font-family: var(--font-heading), 'Space Grotesk', sans-serif; }
+.font-body     { font-family: var(--font-body), 'Inter', sans-serif; }
+.font-mono     { font-family: var(--font-mono), 'IBM Plex Mono', monospace; }
+
+/* ─── Scrollbar ──────────────────────────────────────────── */
+::-webkit-scrollbar { width: 0; background: transparent; }
+
+/* ─── Selection ──────────────────────────────────────────── */
+::selection {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+/* ─── Canvas layer ───────────────────────────────────────── */
+#sequenceCanvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  display: block;
+}
+
+/* ─── Overlay layer ──────────────────────────────────────── */
+#overlay {
+  position: relative;
+  z-index: 10;
+  pointer-events: none;
+}
+
+#overlay * {
+  pointer-events: auto;
+}
+
+/* ─── Utility classes ────────────────────────────────────── */
+.editorial-heading {
+  font-family: var(--font-heading), 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+  color: var(--white);
+}
+
+.tech-label {
+  font-family: var(--font-mono), 'IBM Plex Mono', monospace;
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--titanium);
+}
+
+.body-copy {
+  font-family: var(--font-body), 'Inter', sans-serif;
+  font-weight: 300;
+  color: var(--titanium);
+  line-height: 1.7;
+}
+
+
+
+/* ─── Keyboard Focus Indicator (WCAG 2.4.7 Focus Visible) ─── */
+:focus-visible {
+  outline: 2px solid var(--accent, #4AA8FF) !important;
+  outline-offset: 4px !important;
+  box-shadow: 0 0 0 4px rgba(74, 168, 255, 0.2) !important;
+}
+
+/* ─── Animations ─────────────────────────────────────────── */
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.4; }
+  50%       { opacity: 1;   }
+}
+
+@keyframes sweep {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(400%);  }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
 }
